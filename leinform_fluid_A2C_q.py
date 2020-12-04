@@ -53,7 +53,9 @@ from copy import copy
 import random
 
 
-# In[2]:
+#%%
+os.chdir(os.path.dirname("/home/mamitsu/OpenFOAM/mamitsu-6/run/optiair_room/"))
+os.getcwd()# In[2]:
 
 
 # set directory

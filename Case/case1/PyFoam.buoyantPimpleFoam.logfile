@@ -1,0 +1,54 @@
+/*---------------------------------------------------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  6
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+Build  : 6-e29811f5dff8
+Exec   : buoyantPimpleFoam -case /home/mamitsu/OpenFOAM/mamitsu-6/run/optiair_room/Case/case1
+Date   : Dec 04 2020
+Time   : 19:09:13
+Host   : "mamitsu-desktop"
+PID    : 22431
+I/O    : uncollated
+Case   : /home/mamitsu/OpenFOAM/mamitsu-6/run/optiair_room/Case/case1
+nProcs : 1
+sigFpe : Enabling floating point exception trapping (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 10)
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+Create mesh for time = 10
+
+
+PIMPLE: No convergence criteria found
+
+
+PIMPLE: Operating solver in PISO mode
+
+Reading thermophysical properties
+
+Selecting thermodynamics package
+{
+    type            heRhoThermo;
+    mixture         pureMixture;
+    transport       const;
+    thermo          hConst;
+    equationOfState perfectGas;
+    specie          specie;
+    energy          sensibleEnthalpy;
+}
+
+
+
+--> FOAM FATAL ERROR:
+cannot find file "/home/mamitsu/OpenFOAM/mamitsu-6/run/optiair_room/Case/case1/10/p"
+
+    From function virtual Foam::autoPtr<Foam::ISstream> Foam::fileOperations::uncollatedFileOperation::readStream(Foam::regIOobject&, const Foam::fileName&, const Foam::word&, bool) const
+    in file global/fileOperations/uncollatedFileOperation/uncollatedFileOperation.C at line 519.
+
+FOAM exiting
+

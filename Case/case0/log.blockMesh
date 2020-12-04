@@ -8,9 +8,9 @@
 Build  : 6-e29811f5dff8
 Exec   : blockMesh
 Date   : Dec 04 2020
-Time   : 18:19:38
+Time   : 19:09:09
 Host   : "mamitsu-desktop"
-PID    : 25176
+PID    : 22359
 I/O    : uncollated
 Case   : /home/mamitsu/OpenFOAM/mamitsu-6/run/optiair_room/Case/case0
 nProcs : 1

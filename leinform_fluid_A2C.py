@@ -1138,20 +1138,31 @@ class Aircond:
             self.step(act)    
         return self.observation, self.reward, self.done, self.runOK
     
-    def step(self, action, sqb=0.1):
+    def step(self, action, sqb=0.0):
         '''ステップを進める
         報酬はPMV等から選択
         '''
     
-        if self.done or not self.runOK:
+        if self.done:
             self.reset(initial_T=self.initial_T,is_wall=self.is_wall,is_flux=self.is_flux,                wall_boundary=self.wall_boundary, flux_boundary=self.flux_boundary,                 wall_condition=self.wall_condition,inner=self.inner,base=self.base,                 term=self.term,domain=self.domain, pattern=self.pattern,kind=self.kind,                 flux_pattern=self.flux_pattern,flux_interval=self.flux_interval)
             
             # sqb%でrandom_stepを実行
             if random.random()<sqb:
                 self.random_step()
                 self.reward = 0
-            print("reset")
+            print("reset by done")
             # rewardと、observationは1ステップ前の値をそのまま使う。
+
+        elif not self.runOK:
+            self.reset(initial_T=self.initial_T,is_wall=self.is_wall,is_flux=self.is_flux,                wall_boundary=self.wall_boundary, flux_boundary=self.flux_boundary,                 wall_condition=self.wall_condition,inner=self.inner,base=self.base,                 term=self.term,domain=self.domain, pattern=self.pattern,kind=self.kind,                 flux_pattern=self.flux_pattern,flux_interval=self.flux_interval)
+            
+            # sqb%でrandom_stepを実行
+            if random.random()<sqb:
+                self.random_step()
+                self.reward = 0
+            print("reset by runOK is False")
+            # rewardと、observationは1ステップ前の値をそのまま使う。
+
         else:
             
             # actionに従った、境界条件を設定
@@ -1638,7 +1649,7 @@ eps = 1e-5
 alpha = 0.99
 
 # 環境を最初にrandom_stepsで進めてから始める確率
-sqb = 0.2
+sqb = 0.0
 
 
 # In[43]:
@@ -1860,11 +1871,10 @@ class Brain(object):
 
 # In[19]:
 
+COMMENTOUT='''
 
 WEIGHT_FILE = "./weight_save/weight_end.pth"
 
-
-# In[20]:
 
 
 # エージェントが持つ頭脳となるクラスを定義、全エージェントで共有する
@@ -1886,7 +1896,7 @@ class Brain(object):
             actor_critic.parameters(), lr=lr, eps=eps, alpha=alpha)
 
     def update(self, rollouts):
-        '''advanced計算した5つのstepの全てを使って更新します'''
+        """advanced計算した5つのstepの全てを使って更新します"""
         obs_shape = rollouts.observations.size()[2:]  # torch.Size([4, 84, 84])
         num_steps = NUM_ADVANCED_STEP
         num_processes = NUM_PROCESSES
@@ -1922,6 +1932,8 @@ class Brain(object):
 
         self.optimizer.step()  # 結合パラメータを更新
 
+'''
+
 
 # In[47]:
 
@@ -1942,6 +1954,11 @@ kind='quadratic'  # 補完の種類
 #flux_pattern=[[0,50,0,0,0,50,0],[0,0,0,100,0,100,0]]  # fluxのパターン
 flux_pattern=[[0,0,0,0,0,0,0],[0,0,0,0,0,0,0]]  # fluxのパターン
 flux_interval=20  # fluxのインターバルS
+
+
+#%%
+
+
 
 
 # In[ ]:

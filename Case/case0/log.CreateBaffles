@@ -8,9 +8,9 @@
 Build  : 6-e29811f5dff8
 Exec   : createBaffles -overwrite
 Date   : Dec 04 2020
-Time   : 18:19:39
+Time   : 19:09:10
 Host   : "mamitsu-desktop"
-PID    : 25205
+PID    : 22397
 I/O    : uncollated
 Case   : /home/mamitsu/OpenFOAM/mamitsu-6/run/optiair_room/Case/case0
 nProcs : 1

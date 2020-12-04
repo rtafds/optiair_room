@@ -8,9 +8,9 @@
 Build  : 6-e29811f5dff8
 Exec   : createPatch -dict system/createPatchDict2 -overwrite
 Date   : Dec 04 2020
-Time   : 18:19:25
+Time   : 19:09:25
 Host   : "mamitsu-desktop"
-PID    : 23787
+PID    : 23194
 I/O    : uncollated
 Case   : /home/mamitsu/OpenFOAM/mamitsu-6/run/optiair_room/Case/case1
 nProcs : 1
