@@ -1,0 +1,58 @@
+/*---------------------------------------------------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  6
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+Build  : 6-f934eabb0d52
+Exec   : createBaffles -overwrite
+Date   : May 16 2019
+Time   : 17:28:48
+Host   : "mamitsu-desktop"
+PID    : 21746
+I/O    : uncollated
+Case   : /home/mamitsu/OpenFOAM/mamitsu-6/run/aircond5_play/Case/case1
+nProcs : 1
+sigFpe : Enabling floating point exception trapping (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 10)
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+Create mesh for time = 0
+
+Reading baffle criteria from createBafflesDict
+
+Not converting faces on non-coupled patches.
+
+Reading geometric fields
+
+Reading volScalarField IDefault
+Reading volScalarField alphat
+Reading volScalarField nut
+Reading volScalarField p_rgh
+Reading volScalarField G
+Reading volScalarField p
+Reading volScalarField T
+Reading volScalarField k
+Reading volScalarField epsilon
+Reading volVectorField U
+Created zone Table at index 0 with 9 faces
+Converted 9 faces into boundary faces in patches 
+2
+(
+Table_master
+Table_slave
+)
+
+
+--> FOAM Warning : 
+    From function int main(int, char**)
+    in file createBaffles.C at line 854
+    Setting field on boundary faces to zero.
+You might have to edit these fields.
+Writing mesh to 0
+End
+

@@ -1,0 +1,18 @@
+#!/bin/bash
+# ケースファイルを多量に作成する
+# ファイルはoriginからコピーする。
+# $1:NUM_PROCESSES $2:casename
+cd `dirname $0`
+rm -rf ./$2
+rm -rf ../tmpfolder
+cp -r . ../tmpfolder
+rm -rf ../tmpfolder/.git
+mkdir ./$2
+
+RENGE=$(( $1-1 ))
+for i in `seq 0 $RENGE`
+do 
+    cp -r ../tmpfolder ./$2/case$i
+done
+
+rm -rf ../tmpfolder

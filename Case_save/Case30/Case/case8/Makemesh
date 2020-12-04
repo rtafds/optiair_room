@@ -1,0 +1,219 @@
+#!/bin/bash
+cd `dirname $0`
+./Allclean
+rm -r 0
+cp -r 0org 0
+
+
+echo "blockMesh"
+blockMesh > log.blockMesh
+
+echo "setSet"
+setSet -constant > log.Setset << EOF
+faceSet glass1 new boxToFace (-0.001 -0.001 -0.001) (0.001 1.801 0.101)
+faceSet glass2 new boxToFace (7.999 1.399 -0.001) (8.001 1.801 0.101)
+faceSet sun new boxToFace (-0.001 -0.001 -0.001) (2.799 0.001 0.101)
+EOF
+
+echo "createPatch"
+createPatch -dict system/createPatchDict1 -overwrite > log.CreatePatch
+
+echo "setSet"
+setSet -constant > log.Setset  << EOF
+cellSet kitchen new boxToCell (7.499 -0.001 -0.001) (8.001 0.801 0.101)
+cellSet kitchen invert
+quit
+EOF
+
+echo "subsetMesh"
+subsetMesh kitchen -overwrite -patch floor > log.subsetMesh
+
+
+echo "setSet"
+setSet -constant > log.Setset <<EOF
+cellSet sofa new boxToCell (2.999 -0.001 -0.001) (3.401 0.201 0.101)
+cellSet sofa add boxToCell (3.399 -0.001 -0.001) (3.601 0.601 0.101)
+cellSet sofa invert
+quit
+EOF
+
+echo "subsetMesh"
+subsetMesh sofa -overwrite -patch floor > log.subsetMesh
+
+
+echo "setSet"
+setSet -constant > log.Setset << EOF
+faceSet heatsource1 new boxToFace (7.499 0.799 -0.001) (8.001 0.801 0.101)
+faceSet heatsource2 new boxToFace (2.999 0.199 -0.001) (3.401 0.201 0.101)
+faceSet heatsource2 add boxToFace (3.399 0.199 -0.001) (3.401 0.601 0.101)
+quit
+EOF
+
+#faceSet heatsource2 add boxToFace (3.499 0.299 -0.001) (3.501 0.601 0.101)
+echo "createPatch"
+createPatch -dict system/createPatchDict3 -overwrite > log.CreatePatch
+
+
+# 境界条件にheatsource1を追加
+echo "heatsource1_plus"
+python ./makeheatsource/heatsourceU.py ./0/U heatsource1
+python ./makeheatsource/heatsourceT.py ./0/T heatsource1
+python ./makeheatsource/heatsourcep.py ./0/p heatsource1
+python ./makeheatsource/heatsourcep_rgh.py ./0/p_rgh heatsource1
+python ./makeheatsource/heatsourcenut.py ./0/nut heatsource1
+python ./makeheatsource/heatsourcek.py ./0/k heatsource1
+python ./makeheatsource/heatsourceepsilon.py ./0/epsilon heatsource1
+python ./makeheatsource/heatsourcealphat.py ./0/alphat heatsource1
+python ./makeheatsource/heatsourceG.py ./0/G heatsource1
+python ./makeheatsource/heatsourceG.py ./0/IDefault heatsource1
+
+# 境界条件にheatsource2を追加
+echo "heatsource2_plus"
+python ./makeheatsource/heatsourceU.py ./0/U heatsource2
+python ./makeheatsource/heatsourceT.py ./0/T heatsource2
+python ./makeheatsource/heatsourcep.py ./0/p heatsource2
+python ./makeheatsource/heatsourcep_rgh.py ./0/p_rgh heatsource2
+python ./makeheatsource/heatsourcenut.py ./0/nut heatsource2
+python ./makeheatsource/heatsourcek.py ./0/k heatsource2
+python ./makeheatsource/heatsourceepsilon.py ./0/epsilon heatsource2
+python ./makeheatsource/heatsourcealphat.py ./0/alphat heatsource2
+python ./makeheatsource/heatsourceG.py ./0/G heatsource2
+python ./makeheatsource/heatsourceG.py ./0/IDefault heatsource2
+
+
+<<COMMENTOUT
+echo "setSet"
+setSet -constant > log.setSet <<EOF
+cellSet refrigerator new boxToCell (7.699 -0.001 -0.001) (8.001 1.801 0.101)
+cellSet refrigerator invert
+quit
+EOF
+echo "subsetMesh"
+subsetMesh refrigerator -overwrite -patch floor > log.subsetMesh
+COMMENTOUT
+
+
+#echo "topoSet"
+#topoSet > log.topoSet
+
+echo "createBaffles"
+createBaffles -overwrite > log.CreateBaffles
+
+
+echo "setSet"
+setSet -constant > log.Setset  << EOF
+cellSet aircon new boxToCell (-0.001 1.799 -0.001) (0.401 2.201 0.101)
+cellSet aircon invert
+quit
+EOF
+
+echo "subsetMesh"
+#subsetMesh aircon -overwrite > log.subsetMesh
+
+# ceilingと境界を同期する場合
+subsetMesh aircon -overwrite -patch ceiling > log.subsetMesh
+
+# oldInternalFacesはwallのためboundaryをかきかえないといけない。
+#python sed.py ./constant/polyMesh/boundary
+
+
+echo "setSet"
+setSet -constant > log.Setset  << EOF
+faceSet inlet new boxToFace (0.399 1.799 -0.001) (0.401 2.001 0.101)
+faceSet outlet new boxToFace (-0.001 2.199 -0.001) (0.401 2.201 0.101)
+quit
+EOF
+
+echo "createPatch"
+createPatch -dict system/createPatchDict2 -overwrite > log.CreatePatch
+
+# 境界条件にinletを追加
+echo "inlet_plus"
+python ./makeinlet/inletU.py ./0/U
+python ./makeinlet/inletT.py ./0/T
+python ./makeinlet/inletp.py ./0/p
+python ./makeinlet/inletp_rgh.py ./0/p_rgh
+python ./makeinlet/inletnut.py ./0/nut
+python ./makeinlet/inletk.py ./0/k
+python ./makeinlet/inletepsilon.py ./0/epsilon
+python ./makeinlet/inletalphat.py ./0/alphat
+python ./makeinlet/inletG.py ./0/G
+python ./makeinlet/inletG.py ./0/IDefault
+
+echo "outlet_plus"
+python ./makeoutlet/outletU.py ./0/U
+python ./makeoutlet/outletT.py ./0/T
+python ./makeoutlet/outletp.py ./0/p
+python ./makeoutlet/outletp_rgh.py ./0/p_rgh
+python ./makeoutlet/outletnut.py ./0/nut
+python ./makeoutlet/outletk.py ./0/k
+python ./makeoutlet/outletepsilon.py ./0/epsilon
+python ./makeoutlet/outletalphat.py ./0/alphat
+python ./makeoutlet/outletG.py ./0/G
+python ./makeoutlet/outletG.py ./0/IDefault
+
+
+<<COMMENTOUT
+echo "setSet"
+setSet -constant > log.setSet2 << EOF
+cellSet refineCell new boxToCell (-0.001 1.199 -0.001) (2.401 2.401 0.101)
+quit
+EOF
+
+
+echo "refineMesh"
+refineMesh -overwrite > log.refineMesh1
+COMMENTOUT
+
+#echo "renumberMesh"
+#renumberMesh -dict system/renumberMeshDict -overwrite > log.renumber
+
+
+<< COMMENTOUT
+echo "blockMesh"
+blockMesh > log.blockMesh
+
+echo "setSet"
+setSet -constant > log.Setset  << EOF
+faceSet inlet new boxToFace (3.999 2.029 -0.901) (4.001 3.531 0.901)
+faceSet outlet new boxToFace (-0.001 1.919 -2.001) (0.901 4.021 -1.999)
+cellSet refineCell2 new boxToCell (1.249 3.279 -0.251) (2.401 3.921 1.801)
+faceSet inlet new boxToFace (-0.001 3.499 -0.001) (0.001 4.001 0.1.001)
+quit
+EOF
+
+echo "createPatch"
+createPatch -overwrite > log.CreatePatch
+
+
+echo "refineMesh"
+refineMesh -dict system/refineMeshDict2 -overwrite > log.refineMesh2
+
+echo "setSet"
+setSet -constant > log.setSet2 << EOF
+cellSet refineCell1 new boxToCell (1.499 3.279 -0.001) (2.101 3.721 1.701)
+quit
+EOF
+
+echo "refineMesh"
+refineMesh -dict system/refineMeshDict1 -overwrite > log.refineMesh1
+
+#echo "surfaceFeatureExtract"
+#surfaceFeatureExtract > log.feaure
+
+echo "snappyHexMesh"
+snappyHexMesh -overwrite > log.snappy
+
+
+#echo "renumberMesh"
+#renumberMesh -overwrite > log.renumber
+
+echo "setZone"
+./setZone
+
+echo "checkMesh"
+checkMesh > log.checkMesh
+
+echo "End of mesh"
+
+COMMENTOUT
