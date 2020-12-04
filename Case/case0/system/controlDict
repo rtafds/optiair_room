@@ -14,11 +14,11 @@ application buoyantPimpleFoam;
 
 startFrom startTime;
 
-startTime 20;
+startTime 200;
 
 stopAt endTime;
 
-endTime 30;
+endTime 300;
 
 deltaT 0.01;
 

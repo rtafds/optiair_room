@@ -56,7 +56,7 @@ import random
 
 # move directory. I cannot carry out in jupyter vscode "os.chdir(os.path.dirname('__file__')"
 
-os.chdir(os.path.dirname("/home/mamitsu/OpenFOAM/mamitsu-6/run/aircond5/"))
+os.chdir(os.path.dirname("/home/mamitsu/OpenFOAM/mamitsu-6/run/optiair_room/"))
 os.getcwd()
 # set directory
 # 試す用

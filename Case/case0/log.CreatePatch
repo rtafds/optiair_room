@@ -8,11 +8,11 @@
 Build  : 6-e29811f5dff8
 Exec   : createPatch -dict system/createPatchDict2 -overwrite
 Date   : Dec 04 2020
-Time   : 17:59:18
+Time   : 18:19:39
 Host   : "mamitsu-desktop"
-PID    : 14235
+PID    : 25209
 I/O    : uncollated
-Case   : /home/mamitsu/OpenFOAM/mamitsu-6/run/aircond5/Case/case0
+Case   : /home/mamitsu/OpenFOAM/mamitsu-6/run/optiair_room/Case/case0
 nProcs : 1
 sigFpe : Enabling floating point exception trapping (FOAM_SIGFPE).
 fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 10)
@@ -21,7 +21,7 @@ allowSystemOperations : Allowing user-supplied system call operations
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 Create time
 
-Create polyMesh for time = 20
+Create polyMesh for time = 0
 
 Reading createPatchDict
 
@@ -46,7 +46,7 @@ Not synchronising points.
 Removing patches with no faces in them.
 
 No patches removed.
-Writing repatched mesh to 20
+Writing repatched mesh to 0
 
 End
 

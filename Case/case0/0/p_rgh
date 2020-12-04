@@ -10,6 +10,7 @@ FoamFile
     version     2.0;
     format      ascii;
     class       volScalarField;
+    location    "0";
     object      p_rgh;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
@@ -20,7 +21,19 @@ internalField   uniform 101325;
 
 boundaryField
 {
-    ".*"
+    floor
+    {
+        type            zeroGradient;
+    }
+    ceiling
+    {
+        type            zeroGradient;
+    }
+    sWall
+    {
+        type            zeroGradient;
+    }
+    nWall
     {
         type            zeroGradient;
     }
@@ -37,7 +50,15 @@ boundaryField
     {
         type            zeroGradient;
     }
-    heatsource2
+    glass1
+    {
+        type            zeroGradient;
+    }
+    glass2
+    {
+        type            zeroGradient;
+    }
+    sun
     {
         type            zeroGradient;
     }
@@ -45,15 +66,19 @@ boundaryField
     {
         type            zeroGradient;
     }
-    outlet
+    heatsource2
     {
-        type            fixedValue;
-        value           uniform 101325;
+        type            zeroGradient;
     }
-    inlet
+    Table_master
+    {
+        type            zeroGradient;
+    }
+    Table_slave
     {
         type            zeroGradient;
     }
 }
+
 
 // ************************************************************************* //

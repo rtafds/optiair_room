@@ -8,11 +8,11 @@
 Build  : 6-e29811f5dff8
 Exec   : blockMesh
 Date   : Dec 04 2020
-Time   : 17:42:25
+Time   : 18:19:25
 Host   : "mamitsu-desktop"
-PID    : 10274
+PID    : 23754
 I/O    : uncollated
-Case   : /home/mamitsu/OpenFOAM/mamitsu-6/run/aircond5/Case/case1
+Case   : /home/mamitsu/OpenFOAM/mamitsu-6/run/optiair_room/Case/case1
 nProcs : 1
 sigFpe : Enabling floating point exception trapping (FOAM_SIGFPE).
 fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 10)
@@ -22,7 +22,7 @@ allowSystemOperations : Allowing user-supplied system call operations
 Create time
 
 Creating block mesh from
-    "/home/mamitsu/OpenFOAM/mamitsu-6/run/aircond5/Case/case1/system/blockMeshDict"
+    "/home/mamitsu/OpenFOAM/mamitsu-6/run/optiair_room/Case/case1/system/blockMeshDict"
 Creating block edges
 No non-planar block faces defined
 Creating topology blocks

@@ -8,11 +8,11 @@
 Build  : 6-e29811f5dff8
 Exec   : setSet -constant
 Date   : Dec 04 2020
-Time   : 17:42:26
+Time   : 18:19:25
 Host   : "mamitsu-desktop"
-PID    : 10306
+PID    : 23786
 I/O    : uncollated
-Case   : /home/mamitsu/OpenFOAM/mamitsu-6/run/aircond5/Case/case1
+Case   : /home/mamitsu/OpenFOAM/mamitsu-6/run/optiair_room/Case/case1
 nProcs : 1
 sigFpe : Enabling floating point exception trapping (FOAM_SIGFPE).
 fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 10)

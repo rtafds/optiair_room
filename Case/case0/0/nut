@@ -21,12 +21,36 @@ internalField   uniform 0;
 
 boundaryField
 {
-    ".*"
+    floor
     {
         type            nutkWallFunction;
-        Cmu             0.09;  //| model coefficient  | no (required) | 0.09
-        kappa           0.41;  //| Von Karman constant| no (required) | 0.41
-        E               9.8;   //| model coefficient  | no (required) | 9.8
+        Cmu             0.09;
+        kappa           0.41;
+        E               9.8;
+        value           uniform 0;
+    }
+    ceiling
+    {
+        type            nutkWallFunction;
+        Cmu             0.09;
+        kappa           0.41;
+        E               9.8;
+        value           uniform 0;
+    }
+    sWall
+    {
+        type            nutkWallFunction;
+        Cmu             0.09;
+        kappa           0.41;
+        E               9.8;
+        value           uniform 0;
+    }
+    nWall
+    {
+        type            nutkWallFunction;
+        Cmu             0.09;
+        kappa           0.41;
+        E               9.8;
         value           uniform 0;
     }
     sideWalls
@@ -43,7 +67,23 @@ boundaryField
         type            calculated;
         value           uniform 0;
     }
-    heatsource2
+    glass1
+    {
+        type            nutkWallFunction;
+        Cmu             0.09;
+        kappa           0.41;
+        E               9.8;
+        value           uniform 0;
+    }
+    glass2
+    {
+        type            nutkWallFunction;
+        Cmu             0.09;
+        kappa           0.41;
+        E               9.8;
+        value           uniform 0;
+    }
+    sun
     {
         type            nutkWallFunction;
         Cmu             0.09;
@@ -59,13 +99,30 @@ boundaryField
         E               9.8;
         value           uniform 0;
     }
-    outlet
+    heatsource2
     {
-        type            zeroGradient;
+        type            nutkWallFunction;
+        Cmu             0.09;
+        kappa           0.41;
+        E               9.8;
+        value           uniform 0;
     }
-    inlet
+    Table_master
     {
-        type            calculated;
+        type            nutkWallFunction;
+        Cmu             0.09;
+        kappa           0.41;
+        E               9.8;
+        coupleGroup     Table;
+        value           uniform 0;
+    }
+    Table_slave
+    {
+        type            nutkWallFunction;
+        Cmu             0.09;
+        kappa           0.41;
+        E               9.8;
+        coupleGroup     Table;
         value           uniform 0;
     }
 }
