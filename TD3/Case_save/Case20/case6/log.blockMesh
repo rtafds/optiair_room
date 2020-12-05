@@ -1,0 +1,74 @@
+/*---------------------------------------------------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  6
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+Build  : 6-f934eabb0d52
+Exec   : blockMesh
+Date   : May 16 2019
+Time   : 20:16:31
+Host   : "mamitsu-desktop"
+PID    : 938
+I/O    : uncollated
+Case   : /home/mamitsu/OpenFOAM/mamitsu-6/run/aircond5_play/Case/case6
+nProcs : 1
+sigFpe : Enabling floating point exception trapping (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 10)
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+Creating block mesh from
+    "/home/mamitsu/OpenFOAM/mamitsu-6/run/aircond5_play/Case/case6/system/blockMeshDict"
+Creating block edges
+No non-planar block faces defined
+Creating topology blocks
+Creating topology patches
+
+Creating block mesh topology
+
+Check topology
+
+	Basic statistics
+		Number of internal faces : 0
+		Number of boundary faces : 6
+		Number of defined boundary faces : 6
+		Number of undefined boundary faces : 0
+	Checking patch -> block consistency
+
+Creating block offsets
+Creating merge list .
+
+Creating polyMesh from blockMesh
+Creating patches
+Creating cells
+Creating points with scale 1
+    Block 0 cell size :
+        i : 0.2 .. 0.2
+        j : 0.2 .. 0.2
+        k : 0.1 .. 0.1
+
+
+Writing polyMesh
+----------------
+Mesh Information
+----------------
+  boundingBox: (0 0 0) (8 2.4 0.1)
+  nPoints: 1066
+  nCells: 480
+  nFaces: 1972
+  nInternalFaces: 908
+----------------
+Patches
+----------------
+  patch 0 (start: 908 size: 40) name: floor
+  patch 1 (start: 948 size: 40) name: ceiling
+  patch 2 (start: 988 size: 12) name: sWall
+  patch 3 (start: 1000 size: 12) name: nWall
+  patch 4 (start: 1012 size: 960) name: sideWalls
+
+End
+

@@ -1,0 +1,57 @@
+/*---------------------------------------------------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  6
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+Build  : 6-f934eabb0d52
+Exec   : setSet -constant
+Date   : May 16 2019
+Time   : 18:22:58
+Host   : "mamitsu-desktop"
+PID    : 25375
+I/O    : uncollated
+Case   : /home/mamitsu/OpenFOAM/mamitsu-6/run/aircond5_play/Case/case7
+nProcs : 1
+sigFpe : Enabling floating point exception trapping (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 10)
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+Create polyMesh for time = constant
+
+Time:constant  cells:459  faces:1902  points:1034  patches:12  bb:(0 0 0) (8 2.4 0.1)
+cellSets:
+	sofa	size:463
+	aircon	size:459
+	kitchen	size:468
+faceSets:
+	sun	size:14
+	heatsource2	size:4
+	heatsource1	size:3
+	glass2	size:2
+	glass1	size:9
+faceZones:
+	Table	size:18
+
+Successfully read history from .setSet
+Time = constant
+    mesh not changed.
+Please type 'help', 'quit' or a set command after prompt.
+readline>faceSet inlet new boxToFace (0.399 1.799 -0.001) (0.401 2.001 0.101)
+    Set:inlet  Size:0  Action:new
+    Adding faces with centre within boxes 1((0.399 1.799 -0.001) (0.401 2.001 0.101))
+    Writing inlet (size 1) to "constant/polyMesh/sets/inlet" and to vtk file "VTK/inlet/inlet_0.vtk"
+
+readline>faceSet outlet new boxToFace (-0.001 2.199 -0.001) (0.401 2.201 0.101)
+    Set:outlet  Size:0  Action:new
+    Adding faces with centre within boxes 1((-0.001 2.199 -0.001) (0.401 2.201 0.101))
+    Writing outlet (size 2) to "constant/polyMesh/sets/outlet" and to vtk file "VTK/outlet/outlet_0.vtk"
+
+readline>quit
+Quitting ...
+End
+

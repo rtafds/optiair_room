@@ -1,0 +1,62 @@
+Private Sub CommandButton1_Click()
+'
+    AL = Sheet1.Cells(2, 2).Value
+    CLO = Sheet1.Cells(3, 2).Value
+    TA = Sheet1.Cells(4, 2).Value
+    TR = Sheet1.Cells(5, 2).Value
+    VA = Sheet1.Cells(6, 2).Value
+    RH = Sheet1.Cells(7, 2).Value
+'
+'***************************************************
+' 外部仕事 W＝0 [W/㎡]とする。
+'***************************************************
+' PMV 計算準備
+'
+    M = AL * 58.15
+    LCL = CLO
+    W = 0
+'    PA = (RH / 100 * Exp(18.6686 - 4030.18 / (TA + 235))) / 0.00750062
+    PPK = 673.4 - 1.8 * TA
+    PPA = 3.2437814 + 0.00326014 * PPK + 2.00658 * 1E-09 * PPK * PPK * PPK
+    PPB = (1165.09 - PPK) * (1 + 0.00121547 * PPK)
+    PA = RH / 100 * 22105.8416 / Exp(2.302585 * PPK * PPA / PPB) * 1000#
+    EPS = 1E-05
+    MW = M - W
+'
+'FCL＝着衣表面積／裸体表面積の比
+    FCL = 1# + 0.2 * LCL
+    If LCL > 0.5 Then FCL = 1.05 + 0.1 * LCL
+'衣服表面温度TCLの初期値設定
+    TCL = TA
+    TCLA = TCL
+    NOI = 1
+' 着衣表面温度の計算
+BBB:
+    TCLA = 0.8 * TCLA + 0.2 * TCL
+    HC = 12.1 * Sqr(VA)
+    If 2.38 * Sqr(Sqr(Abs(TCL - TA))) > HC Then HC = 2.38 * Sqr(Sqr(Abs(TCL - TA)))
+    TCL = 35.7 - 0.028 * MW - 0.155 * LCL * (3.96 * 1E-08 * FCL * ((TCLA + 273) ^ 4 - (TR + 273) ^ 4) + FCL * HC * (TCLA - TA))
+    NOI = NOI + 1
+    If NOI > 150 Then GoTo AAA
+    If Abs(TCLA - TCL) > EPS Then GoTo BBB
+'PMVの計算
+    PM1 = 3.96 * 1E-08 * FCL * ((TCL + 273) ^ 4 - (TA + 273) ^ 4)
+    PM2 = FCL * HC * (TCL - TA)
+    PM3 = 0.303 * Exp(-0.036 * M) + 0.028
+    PM4 = 0
+    If MW > 58.15 Then PM4 = 0.42 * (MW - 58.15)
+    PMV = PM3 * (MW - 3.05 * 0.001 * (5733 - 6.99 * MW - PA) - PM4 - 1.7 * 1E-05 * M * (5867 - PA) - 0.0014 * M * (34 - TA) - PM1 - PM2)
+'PRINT PMV
+    If Abs(PMV) > 3 Then GoTo AAA
+    GoTo CCC
+AAA:
+    PMV = 999990.999
+    PPD = 100#
+    GoTo DDD
+CCC:
+    PPD = 100 - 95 * Exp(-0.0335 * PMV ^ 4 - 0.2179 * PMV ^ 2)
+'
+    Sheet1.Cells(9, 2).Value = PMV
+    Sheet1.Cells(10, 2).Value = PPD
+DDD:
+End Sub

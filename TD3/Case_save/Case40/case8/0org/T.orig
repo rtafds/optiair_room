@@ -1,0 +1,101 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  6
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    object      T;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [0 0 0 1 0 0 0];
+
+internalField   uniform 306;
+
+boundaryField
+{
+    floor
+    {
+        type            wallHeatTransfer;
+        Tinf            uniform 305.2;  // 外部温度
+        alphaWall       uniform 0.24;  // 熱伝達係数
+        value           uniform 306;
+        
+        //type            zeroGradient;
+    }
+    ceiling
+    {
+        type            wallHeatTransfer;
+        Tinf            uniform 303.2;  // 外部温度
+        alphaWall       uniform 0.24;  // 熱伝達係数
+        value           uniform 306;
+        
+        //type            zeroGradient;
+    }
+    nWall
+    {
+        type            wallHeatTransfer;
+        Tinf            uniform 307.2;
+        alphaWall       uniform 0.36;
+        value           uniform 306;
+        
+        //type            zeroGradient;
+    }
+    sWall
+    {
+        type            wallHeatTransfer;
+        Tinf            uniform 315.2;
+        alphaWall       uniform 0.36;
+        value           uniform 306; 
+    }
+    glass1
+    {
+        type            wallHeatTransfer;
+        Tinf            uniform 315.2;   // 外部温度
+        alphaWall       uniform 4.3;   // 熱伝達係数
+        value           uniform 306;
+    }
+    glass2
+    {
+        type            wallHeatTransfer;
+        Tinf            uniform 307.2;   // 外部温度
+        alphaWall       uniform 4.3;   // 熱伝達係数
+        value           uniform 306;
+    }
+    sideWalls
+    {
+        type            empty;
+    }
+    outlet
+    {
+        type            zeroGradient;
+    }
+    inlet
+    {
+        type            fixedValue;
+        value           uniform 293.15;
+    }
+    sun
+    {
+        type            wallHeatTransfer;
+        Tinf            uniform 305.2;  // 外部温度
+        alphaWall       uniform 0.24;  // 熱伝達係数
+        value           uniform 306;
+        /*
+        type          compressible::turbulentHeatFluxTemperature;
+        heatSource    flux;        // flux (熱流束) または power (熱量)
+        q             uniform 50.4; // 熱流束 [W/m2] または 熱量 [W]
+        kappa         fluidThermo;
+        kappaName     none;
+        value         uniform 300;
+        */
+    }
+}
+
+// ************************************************************************* //

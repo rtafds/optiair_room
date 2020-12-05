@@ -1,0 +1,116 @@
+
+/* sinで変化する。
+inletが正方向と負方向に周期的に変化していた。*/
+    inlet
+    {
+        type            codedFixedValue;
+        value           uniform (8.95209e-09 0 0);
+        name            sineVelocity;
+        code            #{
+            fvPatchField<vector> f(
+                patch().lookupPatchField<volVectorField, vector>("U")
+            );
+
+            const scalar t = this->db().time().timeOutputValue();
+            const scalar pi = constant::mathematical::pi;
+
+            forAll(patch().Cf(), i)
+            {
+                f[i] = vector(10.*sin(2.*pi*t/0.1), 0, 0);
+            }
+
+            operator==(f);
+        #};
+    }
+/* 真ん中が多めに来るらしい。分布付き。*/
+    inlet
+    {
+        type            codedFixedValue;
+        value           uniform (0 0 0);
+        redirectType    sineVelocity;
+
+        code
+        #{
+            fvPatchField<vector> f
+            (
+                patch().lookupPatchField<volVectorField, vector>("U")
+            );
+
+            const scalar pi = constant::mathematical::pi;
+
+            const scalar ux = 10.;
+            const scalar ymax = 0.0245;
+
+            forAll(f, i)
+            {
+                const scalar y = patch().Cf()[i][1];
+                f[i] = vector(ux*sin(pi*y/ymax), 0., 0.);
+            }
+            operator==(f);
+        #};
+    }
+
+/*t として時刻を取得し、流速を時間の関数として与えている。*/
+    inlet
+    {
+        type            codedFixedValue;
+        value           uniform (0 0 0);
+        redirectType    sinVelocity;
+
+        code
+        #{
+            fvPatchField<vector> f
+            (
+                patch().lookupPatchField<volVectorField, vector>("U")
+            );
+
+            const scalar t = this->db().time().timeOutputValue();
+            const scalar pi = constant::mathematical::pi;
+
+            const scalar ux = 10.*sin(2.*pi*t/0.1);
+            const scalar ymax = 0.0245;
+
+            forAll(patch().Cf(), i)
+            {
+                const scalar y = patch().Cf()[i][1];
+                f[i] = vector(ux*sin(pi*y/ymax), 0., 0.);
+            }
+            operator==(f);
+        #};
+    }
+/*mixed では値指定と勾配指定を混合できる。refValue() で値指定、refGrad() で勾配指定を行う。
+valueFraction() は混合具合の指定で、0 から 1 の範囲の値を取り、
+0 でノイマン条件 (勾配指定)、1 でディリクレ条件 (値指定) になる。*/
+
+    inlet
+    {
+        type            codedMixed;
+        refValue        uniform (0 0 0);
+        refGradient     uniform (0 0 0);
+        valueFraction   uniform 1;
+        value           uniform (0 0 0);
+        redirectType    sineVelocity;
+
+        code
+        #{
+            fvPatchField<vector> f
+            (
+                patch().lookupPatchField<volVectorField, vector>("U")
+            );
+
+            const scalar pi = constant::mathematical::pi;
+
+            const scalar ux = 10.;
+            const scalar ymax = 0.0245;
+
+            forAll(patch().Cf(), i)
+            {
+                const scalar y = patch().Cf()[i][1];
+                f[i] = vector(ux*sin(pi*y/ymax), 0., 0.);
+            }
+            refValue() = f;
+
+            valueFraction() = 1;
+        #};
+    }
+

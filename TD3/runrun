@@ -1,0 +1,5 @@
+#!/bin/bash
+
+./Allclean
+./Makemesh
+buoyantPimpleFoam

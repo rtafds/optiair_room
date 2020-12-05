@@ -1,0 +1,21 @@
+#!/bin/bash
+# 現在のフォルダからoriginを作成する。
+cd `dirname $0`
+TMP=tmpfolder
+ORIG=origin
+rm -rf ./$ORIG
+rm -rf ../$TMP
+cp -r . ../$TMP
+
+cp -r ../tmpfolder ./$ORIG
+# originから色々と削除していく
+cd ./$ORIG
+# rfオプションだけ別で実行
+rm -rf ./.git
+rm -rf ./.ipynb_checkpoints
+# 他のファイルはまとめて消す
+ls | grep -v -E '0|0org|constant|makeinlet|makeoutlet|system|Allclean|Allrun|makecase|Makemesh|refineMeshDict1|refineMeshDict2|makeheatsource' | xargs rm -r
+
+ls | grep -E 'ipynb|png|pth' | xargs rm
+
+rm -rf ../../$TMP

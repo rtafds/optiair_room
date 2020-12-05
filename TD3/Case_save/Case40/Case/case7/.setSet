@@ -1,0 +1,20 @@
+faceSet glass1 new boxToFace (-0.001 -0.001 -0.001) (0.001 1.801 0.101)
+faceSet glass2 new boxToFace (7.999 1.399 -0.001) (8.001 1.801 0.101)
+faceSet sun new boxToFace (-0.001 -0.001 -0.001) (2.799 0.001 0.101)
+cellSet kitchen new boxToCell (7.499 -0.001 -0.001) (8.001 0.801 0.101)
+cellSet kitchen invert
+quit
+cellSet sofa new boxToCell (2.999 -0.001 -0.001) (3.401 0.201 0.101)
+cellSet sofa add boxToCell (3.399 -0.001 -0.001) (3.601 0.601 0.101)
+cellSet sofa invert
+quit
+faceSet heatsource1 new boxToFace (7.499 0.799 -0.001) (8.001 0.801 0.101)
+faceSet heatsource2 new boxToFace (2.999 0.199 -0.001) (3.401 0.201 0.101)
+faceSet heatsource2 add boxToFace (3.399 0.199 -0.001) (3.401 0.601 0.101)
+quit
+cellSet aircon new boxToCell (-0.001 1.799 -0.001) (0.401 2.201 0.101)
+cellSet aircon invert
+quit
+faceSet inlet new boxToFace (0.399 1.799 -0.001) (0.401 2.001 0.101)
+faceSet outlet new boxToFace (-0.001 2.199 -0.001) (0.401 2.201 0.101)
+quit
