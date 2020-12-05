@@ -7,10 +7,10 @@
 \*---------------------------------------------------------------------------*/
 Build  : 6-e29811f5dff8
 Exec   : subsetMesh aircon -overwrite -patch ceiling
-Date   : Dec 04 2020
-Time   : 19:09:10
+Date   : Dec 05 2020
+Time   : 18:47:40
 Host   : "mamitsu-desktop"
-PID    : 22399
+PID    : 11373
 I/O    : uncollated
 Case   : /home/mamitsu/OpenFOAM/mamitsu-6/run/optiair_room/Case/case0
 nProcs : 1

@@ -422,7 +422,7 @@ class Sample:
 
 class Aircond:
     '''Aircondのクラス'''
-    def __init__(self, CASE, stride=100,end=3000,
+    def __init__(self, CASE, stride=10,end=3000,
                          pick_width = [0.2,0.2,0], temp_only=False):
         self.CASE = CASE
         # メッシュを作らないとpolymeshがないので。
@@ -909,29 +909,25 @@ class Aircond:
         return EUC
         
         
-    def change_control(self,control):
-        if control == 1:
+    def change_mesh(self, mesh_order):
+        if mesh_order == 1:
             self.blockMeshDict['blocks'][2] = Vector(20,10,1)
             self.blockMeshDict.writeFile()
-            self.controlDict['deltaT'] = 0.02
-        if control == 2:
+        if mesh_order == 2:
             self.blockMeshDict['blocks'][2] = Vector(40,20,1)
             self.blockMeshDict.writeFile()
-            self.controlDict['deltaT'] = 0.02
-        if control == 3:
-            self.blockMeshDict['blocks'][2] = Vector(20,10,1)
-            self.blockMeshDict.writeFile()
-            self.controlDict['deltaT'] = 0.01
-        if control == 4:
-            self.blockMeshDict['blocks'][2] = Vector(40,20,1)
-            self.blockMeshDict.writeFile()
-            self.controlDict['deltaT'] = 0.01
             
             
-    def change_write_interval(self, writeInterval):
-        if writeInterval!='nochange':
-            self.controlDict['writeInterval'] = writeInterval
-            self.controlDict.writeFile()
+    def change_write_interval(self, write_interval_ratio=1):
+        """write_interval(float)[<=1] : write_interval_ratio
+        writeInterval(write controlDict) = step/deltaT * write_interval_ratio
+        If write_interval_ratio is 1, this matches with step and export step.
+        If write_interval_ratio is 0.1, export step is 10 times step.
+        """
+        deltaT = self.controlDict['deltaT']
+        writeInterval = self.stride / deltaT * write_interval_ratio
+        self.controlDict['writeInterval'] = writeInterval
+        self.controlDict.writeFile()
         
     def make_ETD_pattern(self, wall_condition, ETD_pattern, inner=['Shade'], base=26+273.15):
         '''ETDから、相当外気温度のパターンを作成する。
@@ -1030,8 +1026,9 @@ class Aircond:
         
         
     def reset(self,initial_T="random",is_wall=False,is_flux=False,
-              wall_boundary = [['floor','sun'], ['ceiling'], ['sWall', 'glass1'],['nWall','glass2']],
-              flux_boundary = ['heatsource1','heatsource2'],
+              write_interval_ratio=1,
+              wall_boundary=[['floor','sun'], ['ceiling'], ['sWall', 'glass1'],['nWall','glass2']],
+              flux_boundary=['heatsource1','heatsource2'],
               wall_condition=[['Shade','Shade','S','N'],[11,12,13]],
               inner=['Shade'],base=26+273.15, term=3,domain=[8,20],pattern=[0,1,2,3,5,6],kind='quadratic',
               flux_pattern=[[0,50,0,0,0,50],[0,0,0,100,0,100]],flux_interval=30):
@@ -1113,7 +1110,8 @@ class Aircond:
         T_the_first['internalField'].setUniform(initial_T_condition)
         T_the_first.writeFile()
         
-        
+        # adjust write interval 
+        self.change_write_interval(write_interval_ratio)
         
         # set action and observation
         self.action_space= self.make_action(self.ACTION_SPEED, self.ACTION_DERECTION, self.ACTION_TEMPERTURE)
@@ -1496,7 +1494,7 @@ boundaryField
 # aircondを並列でたくさんつくるためのクラス
 
 # ケースの作成
-def makecase(NUM_PROCESSES,casename='Case',stride=100, end=3000,write_interval="nochange",pick_width=[0.2,0.2,0],temp_only=False):
+def makecase(NUM_PROCESSES,casename='Case',stride=100, end=3000, pick_width=[0.2,0.2,0],temp_only=False):
     """並列でたくさんのケースをつくる
     xCells : x方向のセル数
     insert_list : 障害物があり、ゼロ埋めするセル
@@ -1509,8 +1507,6 @@ def makecase(NUM_PROCESSES,casename='Case',stride=100, end=3000,write_interval="
     for i in range(NUM_PROCESSES):
         CASE = SolutionDirectory("./{}/case{}".format(casename, i))
         aircond = Aircond(CASE, stride=stride, end=end[i], pick_width=pick_width, temp_only=temp_only)
-        if write_interval!="nochange":
-            aircond.change_write_interval(write_interval)
         Envs_append(aircond)
     return Envs
 
@@ -1534,6 +1530,7 @@ def list_depth(p):
 
 
 def resets(Envs, initial_T="random",is_wall=False,is_flux=False,
+              write_interval_ratio=1,
               wall_boundary = [['floor','sun'], ['ceiling'], ['sWall', 'glass1'],['nWall','glass2']],
               flux_boundary = ['heatsource1','heatsource2'],
               wall_condition=[['Shade','Shade','S','N'],[11,12,13]],
@@ -1563,7 +1560,12 @@ def resets(Envs, initial_T="random",is_wall=False,is_flux=False,
     obs = []
     obs_append = obs.append
     for i in range(len(Envs)):
-        obs_i = Envs[i].reset(initial_T=initial_T[i],is_wall=is_wall,is_flux=is_flux,                wall_boundary=wall_boundary, flux_boundary=flux_boundary,               wall_condition=wall_condition[i],inner=inner,base=base,                 term=term,domain=domain, pattern=pattern[i],kind=kind,               flux_pattern=flux_pattern[i],flux_interval=flux_interval)
+        obs_i = Envs[i].reset(initial_T=initial_T[i],is_wall=is_wall,is_flux=is_flux,\
+                            write_interval_ratio=write_interval_ratio,\
+                            wall_boundary=wall_boundary, flux_boundary=flux_boundary,\
+                            wall_condition=wall_condition[i],inner=inner,base=base,\
+                            term=term,domain=domain, pattern=pattern[i],kind=kind,\
+                            flux_pattern=flux_pattern[i],flux_interval=flux_interval)
         obs_append(obs_i)
         
     obs = np.array(obs)
@@ -1954,10 +1956,6 @@ kind='quadratic'  # 補完の種類
 #flux_pattern=[[0,50,0,0,0,50,0],[0,0,0,100,0,100,0]]  # fluxのパターン
 flux_pattern=[[0,0,0,0,0,0,0],[0,0,0,0,0,0,0]]  # fluxのパターン
 flux_interval=20  # fluxのインターバルS
-
-
-#%%
-
 
 
 

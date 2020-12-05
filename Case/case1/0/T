@@ -12,35 +12,35 @@ FoamFile
 
 dimensions [ 0 0 0 1 0 0 0 ];
 
-internalField uniform 299.57443982347314;
+internalField uniform 300.272635223813;
 
 boundaryField
 {
   floor
   {
     type wallHeatTransfer;
-    Tinf uniform 298.84999999999997;
+    Tinf uniform 300.04999999999995;
     alphaWall uniform 0.24;
     value uniform 300;
   }
   ceiling
   {
     type wallHeatTransfer;
-    Tinf uniform 298.84999999999997;
+    Tinf uniform 300.04999999999995;
     alphaWall uniform 0.24;
     value uniform 300;
   }
   sWall
   {
     type wallHeatTransfer;
-    Tinf uniform 311.15;
+    Tinf uniform 303.15;
     alphaWall uniform 0.36;
     value uniform 300;
   }
   nWall
   {
     type wallHeatTransfer;
-    Tinf uniform 299.15;
+    Tinf uniform 303.15;
     alphaWall uniform 0.36;
     value uniform 300;
   }
@@ -60,21 +60,21 @@ boundaryField
   glass1
   {
     type wallHeatTransfer;
-    Tinf uniform 311.15;
+    Tinf uniform 303.15;
     alphaWall uniform 4.3;
     value uniform 300;
   }
   glass2
   {
     type wallHeatTransfer;
-    Tinf uniform 299.15;
+    Tinf uniform 303.15;
     alphaWall uniform 4.3;
     value uniform 300;
   }
   sun
   {
     type wallHeatTransfer;
-    Tinf uniform 298.84999999999997;
+    Tinf uniform 300.04999999999995;
     alphaWall uniform 0.24;
     value uniform 300;
   }
@@ -86,7 +86,7 @@ boundaryField
   heatsource2
   {
     type fixedGradient;
-    gradient uniform 100;
+    gradient uniform 0;
   }
   Table_master
   {

@@ -7,10 +7,10 @@
 \*---------------------------------------------------------------------------*/
 Build  : 6-e29811f5dff8
 Exec   : setSet -constant
-Date   : Dec 04 2020
-Time   : 19:09:21
+Date   : Dec 05 2020
+Time   : 18:47:46
 Host   : "mamitsu-desktop"
-PID    : 22928
+PID    : 11962
 I/O    : uncollated
 Case   : /home/mamitsu/OpenFOAM/mamitsu-6/run/optiair_room/Case/case7
 nProcs : 1
