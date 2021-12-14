@@ -426,7 +426,8 @@ class Aircond:
                          pick_width = [0.2,0.2,0], temp_only=False):
         self.CASE = CASE
         # メッシュを作らないとpolymeshがないので。
-        os.system(CASE.name + '/Makemesh')
+        subprocess.run(CASE.name + '/Makemesh',shell=True)
+
         # get n_cells
         self.sample = Sample(CASE)
         self.n_cells = self.sample.n_cells
@@ -453,7 +454,8 @@ class Aircond:
         #T_space = observation_space[:,2].reshape(self.x_cells,-1)
         #self.observation_space = np.array([U_space_x, U_space_y, T_space])
         self.temp_only = temp_only
-        self.observation_space = self.make_observation(self.CASE.initialDir(), celsius=True, temp_only=self.temp_only)
+
+        #self.observation_space = self.make_observation(self.CASE.initialDir(), celsius=True, temp_only=self.temp_only)
         
         self.stride = stride  # 進めるステップの幅
         # stepが始まってからのtime。始まる前にstepを進めた場合は含まれず0
@@ -647,8 +649,8 @@ class Aircond:
         self.x_cells : x方向のセル数
         self.insert_list : 障害物があり、値を0で埋めるべき場所
         '''
-        U_value = np.array(ParsedParameterFile(Dir + '/U').content['internalField'])
-        T_value = np.array(ParsedParameterFile(Dir + '/T').content['internalField'])
+        U_value = np.array(ParsedParameterFile(Dir + '/U').content['internalField']).copy()
+        T_value = np.array(ParsedParameterFile(Dir + '/T').content['internalField']).copy()
         if U_value.ndim == 0:
             U_value = self.initial_to_array(U_value)
             T_value = self.initial_to_array(T_value)
@@ -1956,6 +1958,12 @@ kind='quadratic'  # 補完の種類
 #flux_pattern=[[0,50,0,0,0,50,0],[0,0,0,100,0,100,0]]  # fluxのパターン
 flux_pattern=[[0,0,0,0,0,0,0],[0,0,0,0,0,0,0]]  # fluxのパターン
 flux_interval=20  # fluxのインターバルS
+
+#%%
+#Envs = makecase(1, stride=STRIDE, end=END, pick_width = PICK_WIDTH, temp_only=TEMP_ONLY)
+
+
+#%%
 
 
 
