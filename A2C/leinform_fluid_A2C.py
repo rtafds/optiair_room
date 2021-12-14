@@ -1048,11 +1048,15 @@ class Aircond:
         random_temp_domain = [26+273.15, 35+273.15]
         
         # reset control Dict
-        clDict = ParsedParameterFile(self.CASE.controlDict())
-        clDict['startTime'] = self.startTime
-        clDict['endTime'] = self.endTime
-        clDict.writeFile()
-        
+        #clDict = ParsedParameterFile(self.CASE.controlDict())
+        #clDict['startTime'] = self.startTime
+        #clDict['endTime'] = self.endTime
+        #clDict.writeFile()
+        self.controlDict['startTime'] = self.startTime
+        self.controlDict['endTime'] = self.endTime
+        self.controlDict.writeFile()
+
+
         # 条件。全て保存する。
         self.initial_T = initial_T
         self.is_wall = is_wall
@@ -1960,11 +1964,16 @@ flux_pattern=[[0,0,0,0,0,0,0],[0,0,0,0,0,0,0]]  # fluxのパターン
 flux_interval=20  # fluxのインターバルS
 
 #%%
-#Envs = makecase(1, stride=STRIDE, end=END, pick_width = PICK_WIDTH, temp_only=TEMP_ONLY)
+Envs = makecase(1, stride=STRIDE, end=END, pick_width = PICK_WIDTH, temp_only=TEMP_ONLY)
 
 
 #%%
+env = Envs[0]
 
+env.reset()
+
+#%%
+env.controlDict['startTime']
 
 
 # In[ ]:
