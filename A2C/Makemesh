@@ -81,17 +81,6 @@ python ./makeheatsource/heatsourceG.py ./0/G heatsource2
 python ./makeheatsource/heatsourceG.py ./0/IDefault heatsource2
 
 
-<<COMMENTOUT
-echo "setSet"
-setSet -constant > log.setSet <<EOF
-cellSet refrigerator new boxToCell (7.699 -0.001 -0.001) (8.001 1.801 0.101)
-cellSet refrigerator invert
-quit
-EOF
-echo "subsetMesh"
-subsetMesh refrigerator -overwrite -patch floor > log.subsetMesh
-COMMENTOUT
-
 
 #echo "topoSet"
 #topoSet > log.topoSet
@@ -152,68 +141,3 @@ python ./makeoutlet/outletalphat.py ./0/alphat
 python ./makeoutlet/outletG.py ./0/G
 python ./makeoutlet/outletG.py ./0/IDefault
 
-
-<<COMMENTOUT
-echo "setSet"
-setSet -constant > log.setSet2 << EOF
-cellSet refineCell new boxToCell (-0.001 1.199 -0.001) (2.401 2.401 0.101)
-quit
-EOF
-
-
-echo "refineMesh"
-refineMesh -overwrite > log.refineMesh1
-COMMENTOUT
-
-#echo "renumberMesh"
-#renumberMesh -dict system/renumberMeshDict -overwrite > log.renumber
-
-
-<< COMMENTOUT
-echo "blockMesh"
-blockMesh > log.blockMesh
-
-echo "setSet"
-setSet -constant > log.Setset  << EOF
-faceSet inlet new boxToFace (3.999 2.029 -0.901) (4.001 3.531 0.901)
-faceSet outlet new boxToFace (-0.001 1.919 -2.001) (0.901 4.021 -1.999)
-cellSet refineCell2 new boxToCell (1.249 3.279 -0.251) (2.401 3.921 1.801)
-faceSet inlet new boxToFace (-0.001 3.499 -0.001) (0.001 4.001 0.1.001)
-quit
-EOF
-
-echo "createPatch"
-createPatch -overwrite > log.CreatePatch
-
-
-echo "refineMesh"
-refineMesh -dict system/refineMeshDict2 -overwrite > log.refineMesh2
-
-echo "setSet"
-setSet -constant > log.setSet2 << EOF
-cellSet refineCell1 new boxToCell (1.499 3.279 -0.001) (2.101 3.721 1.701)
-quit
-EOF
-
-echo "refineMesh"
-refineMesh -dict system/refineMeshDict1 -overwrite > log.refineMesh1
-
-#echo "surfaceFeatureExtract"
-#surfaceFeatureExtract > log.feaure
-
-echo "snappyHexMesh"
-snappyHexMesh -overwrite > log.snappy
-
-
-#echo "renumberMesh"
-#renumberMesh -overwrite > log.renumber
-
-echo "setZone"
-./setZone
-
-echo "checkMesh"
-checkMesh > log.checkMesh
-
-echo "End of mesh"
-
-COMMENTOUT

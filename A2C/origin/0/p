@@ -62,6 +62,14 @@ boundaryField
     {
         type            zeroGradient;
     }
+    heatsource1
+    {
+        type            zeroGradient;
+    }
+    heatsource2
+    {
+        type            zeroGradient;
+    }
     Table_master
     {
         type            zeroGradient;

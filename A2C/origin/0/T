@@ -1,0 +1,107 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  6
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    location    "0";
+    object      T;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [0 0 0 1 0 0 0];
+
+internalField   uniform 300;
+
+boundaryField
+{
+    floor
+    {
+        type            wallHeatTransfer;
+        Tinf            uniform 305.2;
+        alphaWall       uniform 0.24;
+        value           uniform 300;
+    }
+    ceiling
+    {
+        type            wallHeatTransfer;
+        Tinf            uniform 303.2;
+        alphaWall       uniform 0.24;
+        value           uniform 300;
+    }
+    sWall
+    {
+        type            wallHeatTransfer;
+        Tinf            uniform 315.2;
+        alphaWall       uniform 0.36;
+        value           uniform 300;
+    }
+    nWall
+    {
+        type            wallHeatTransfer;
+        Tinf            uniform 307.2;
+        alphaWall       uniform 0.36;
+        value           uniform 300;
+    }
+    sideWalls
+    {
+        type            empty;
+    }
+    outlet
+    {
+        type            zeroGradient;
+    }
+    inlet
+    {
+        type            fixedValue;
+        value           uniform 293.15;
+    }
+    glass1
+    {
+        type            wallHeatTransfer;
+        Tinf            uniform 315.2;
+        alphaWall       uniform 4.3;
+        value           uniform 300;
+    }
+    glass2
+    {
+        type            wallHeatTransfer;
+        Tinf            uniform 307.2;
+        alphaWall       uniform 4.3;
+        value           uniform 300;
+    }
+    sun
+    {
+        type            wallHeatTransfer;
+        Tinf            uniform 305.2;
+        alphaWall       uniform 0.24;
+        value           uniform 300;
+    }
+    heatsource1
+    {
+        type            fixedGradient;
+        gradient        uniform 0;
+    }
+    heatsource2
+    {
+        type            fixedGradient;
+        gradient        uniform 0;
+    }
+    Table_master
+    {
+        type            zeroGradient;
+    }
+    Table_slave
+    {
+        type            zeroGradient;
+    }
+}
+
+
+// ************************************************************************* //

@@ -91,6 +91,22 @@ boundaryField
         E               9.8;
         value           uniform 0;
     }
+    heatsource1
+    {
+        type            nutkWallFunction;
+        Cmu             0.09;
+        kappa           0.41;
+        E               9.8;
+        value           uniform 0;
+    }
+    heatsource2
+    {
+        type            nutkWallFunction;
+        Cmu             0.09;
+        kappa           0.41;
+        E               9.8;
+        value           uniform 0;
+    }
     Table_master
     {
         type            nutkWallFunction;

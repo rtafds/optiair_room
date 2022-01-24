@@ -88,6 +88,20 @@ boundaryField
         emissivity      uniform 0.9;
         value           uniform 0;
     }
+    heatsource1
+    {
+        type            greyDiffusiveRadiation;
+        emissivityMode  lookup;
+        emissivity      uniform 0.9;
+        value           uniform 0;
+    }
+    heatsource2
+    {
+        type            greyDiffusiveRadiation;
+        emissivityMode  lookup;
+        emissivity      uniform 0.9;
+        value           uniform 0;
+    }
     Table_master
     {
         type            greyDiffusiveRadiation;
