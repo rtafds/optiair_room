@@ -70,6 +70,16 @@ boundaryField
         type            kqRWallFunction;
         value           uniform 0.1;
     }
+    heatsource1
+    {
+        type            kqRWallFunction;
+        value           uniform 0.1;
+    }
+    heatsource2
+    {
+        type            kqRWallFunction;
+        value           uniform 0.1;
+    }
     Table_master
     {
         type            kqRWallFunction;

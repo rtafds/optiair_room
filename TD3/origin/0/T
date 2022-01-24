@@ -10,62 +10,43 @@ FoamFile
     version     2.0;
     format      ascii;
     class       volScalarField;
+    location    "0";
     object      T;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
 dimensions      [0 0 0 1 0 0 0];
 
-internalField   uniform 306;
+internalField   uniform 300;
 
 boundaryField
 {
     floor
     {
         type            wallHeatTransfer;
-        Tinf            uniform 305.2;  // 外部温度
-        alphaWall       uniform 0.24;  // 熱伝達係数
+        Tinf            uniform 305.2;
+        alphaWall       uniform 0.24;
         value           uniform 300;
-        
-        //type            zeroGradient;
     }
     ceiling
     {
         type            wallHeatTransfer;
-        Tinf            uniform 303.2;  // 外部温度
-        alphaWall       uniform 0.24;  // 熱伝達係数
+        Tinf            uniform 303.2;
+        alphaWall       uniform 0.24;
         value           uniform 300;
-        
-        //type            zeroGradient;
-    }
-    nWall
-    {
-        type            wallHeatTransfer;
-        Tinf            uniform 307.2;
-        alphaWall       uniform 0.36;
-        value           uniform 300;
-        
-        //type            zeroGradient;
     }
     sWall
     {
         type            wallHeatTransfer;
         Tinf            uniform 315.2;
         alphaWall       uniform 0.36;
-        value           uniform 300; 
-    }
-    glass1
-    {
-        type            wallHeatTransfer;
-        Tinf            uniform 315.2;   // 外部温度
-        alphaWall       uniform 4.3;   // 熱伝達係数
         value           uniform 300;
     }
-    glass2
+    nWall
     {
         type            wallHeatTransfer;
-        Tinf            uniform 307.2;   // 外部温度
-        alphaWall       uniform 4.3;   // 熱伝達係数
+        Tinf            uniform 307.2;
+        alphaWall       uniform 0.36;
         value           uniform 300;
     }
     sideWalls
@@ -81,21 +62,46 @@ boundaryField
         type            fixedValue;
         value           uniform 293.15;
     }
+    glass1
+    {
+        type            wallHeatTransfer;
+        Tinf            uniform 315.2;
+        alphaWall       uniform 4.3;
+        value           uniform 300;
+    }
+    glass2
+    {
+        type            wallHeatTransfer;
+        Tinf            uniform 307.2;
+        alphaWall       uniform 4.3;
+        value           uniform 300;
+    }
     sun
     {
         type            wallHeatTransfer;
-        Tinf            uniform 305.2;  // 外部温度
-        alphaWall       uniform 0.24;  // 熱伝達係数
+        Tinf            uniform 305.2;
+        alphaWall       uniform 0.24;
         value           uniform 300;
-        /*
-        type          compressible::turbulentHeatFluxTemperature;
-        heatSource    flux;        // flux (熱流束) または power (熱量)
-        q             uniform 50.4; // 熱流束 [W/m2] または 熱量 [W]
-        kappa         fluidThermo;
-        kappaName     none;
-        value         uniform 300;
-        */
+    }
+    heatsource1
+    {
+        type            fixedGradient;
+        gradient        uniform 0;
+    }
+    heatsource2
+    {
+        type            fixedGradient;
+        gradient        uniform 0;
+    }
+    Table_master
+    {
+        type            zeroGradient;
+    }
+    Table_slave
+    {
+        type            zeroGradient;
     }
 }
+
 
 // ************************************************************************* //

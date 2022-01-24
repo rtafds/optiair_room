@@ -1,0 +1,18 @@
+RuntimeError                              Traceback (most recent call last)
+<ipython-input-2-f4c8c2e08d8b> in <module>
+     54         # 行動を求める
+     55         with torch.no_grad():
+---> 56             action = actor_critic.act(rollouts.observations[step])
+     57 
+     58         cpu_actions = action.squeeze(1).cpu().numpy()  # tensorをNumPyに
+
+<ipython-input-1-501930c6988d> in act(self, x)
+   1795         value, actor_output = self(x)
+   1796         probs = F.softmax(actor_output, dim=1)    # dim=1で行動の種類方向に計算
+-> 1797         action = probs.multinomial(num_samples=1)
+   1798 
+   1799         return action
+
+RuntimeError: probability tensor contains either `inf`, `nan` or element < 0
+
+​
