@@ -5,14 +5,14 @@
     \\  /    A nd           | Version:  6
      \\/     M anipulation  |
 \*---------------------------------------------------------------------------*/
-Build  : 6-e29811f5dff8
+Build  : 6-fa1285188035
 Exec   : createBaffles -overwrite
-Date   : Nov 23 2020
-Time   : 01:17:14
+Date   : Jan 11 2022
+Time   : 06:21:38
 Host   : "mamitsu-desktop"
-PID    : 23380
+PID    : 16138
 I/O    : uncollated
-Case   : /home/mamitsu/OpenFOAM/mamitsu-6/run/aircond5/play/case1
+Case   : /home/mamitsu/OpenFOAM/mamitsu-6/run/optiair_room/A2C/play/case1
 nProcs : 1
 sigFpe : Enabling floating point exception trapping (FOAM_SIGFPE).
 fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 10)

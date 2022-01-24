@@ -62,6 +62,14 @@ boundaryField
     {
         type            noSlip;
     }
+    heatsource1
+    {
+        type            noSlip;
+    }
+    heatsource2
+    {
+        type            noSlip;
+    }
     Table_master
     {
         type            noSlip;
